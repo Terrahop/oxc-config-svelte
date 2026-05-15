@@ -1,0 +1,52 @@
+{
+  "name": "@terrahop/oxc-config-svelte",
+  "version": "0.1.0",
+  "description": "Oxlint & oxfmt shareable config",
+  "keywords": [
+    "oxfmt",
+    "oxlint"
+  ],
+  "license": "MIT",
+  "author": "@terrahop",
+  "type": "module",
+  "exports": {
+    "./lint": "./lint.js",
+    "./fmt": "./fmt.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {},
+  "dependencies": {
+    "@e18e/eslint-plugin": "^0.5.0",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "eslint-plugin-compat": "7.0.2",
+    "eslint-plugin-format": "2.0.1",
+    "eslint-plugin-perfectionist": "^5.9.0",
+    "eslint-plugin-prefer-let": "^4.2.2",
+    "eslint-plugin-regexp": "^3.1.0",
+    "eslint-plugin-security": "4.0.0",
+    "eslint-plugin-sonarjs": "4.0.3",
+    "oxfmt": "^0.49.0",
+    "oxlint": "^1.60.0",
+    "oxlint-tsgolint": "0.22.1",
+    "typescript": "^6.0.2"
+  },
+  "peerDependencies": {
+    "oxfmt": "^0.49.0",
+    "oxlint": "^1.57.0",
+    "oxlint-tsgolint": ">=0.18.1",
+    "typescript": "^6.0.2"
+  },
+  "browserslist": [
+    "defaults and fully supports es6-module"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "packageManager": "pnpm@11.1.2",
+  "clean-publish": {
+    "cleanDocs": true
+  },
+  "devDependencies": {
+    "prettier-plugin-svelte": "^3.5.2"
+  }
+}
