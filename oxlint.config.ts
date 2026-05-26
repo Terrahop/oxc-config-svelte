@@ -1,4 +1,10 @@
 import config from './lint.js'
 
-// oxlint-disable-next-line import/no-default-export
+interface A{
+  some: string
+}
+
+
+const t: Array<string> = []
+
 export default config

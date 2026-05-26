@@ -1,10 +1,21 @@
+// oxlint-disable import/no-named-as-default-member
+import pluginE18e from '@e18e/eslint-plugin'
+import pluginCompat from 'eslint-plugin-compat'
 import { defineConfig } from 'oxlint'
+// import pluginPerfectionist from 'eslint-plugin-perfectionist'
+import pluginRegexp from 'eslint-plugin-regexp'
+import pluginSecurity from 'eslint-plugin-security'
+import pluginSonarJs from 'eslint-plugin-sonarjs'
+// import pluginStylistic from '@stylistic/eslint-plugin'
 
 // oxlint-disable-next-line sort-keys, import/no-default-export
 export default defineConfig({
   options: {
+    denyWarnings: false,
+    maxWarnings: 100,
+    reportUnusedDisableDirectives: 'error',
     typeAware: true,
-    typeCheck: true,
+    typeCheck: true
   },
   categories: {
     correctness: 'error',
@@ -24,7 +35,7 @@ export default defineConfig({
     document: 'readonly',
     window: 'readonly',
   },
-  plugins: ['eslint', 'typescript', 'unicorn', 'oxc', 'import', 'jsdoc', 'node', 'promise', 'vitest'],
+  plugins: ['eslint', 'typescript', 'unicorn', 'oxc', 'import', 'jsdoc', 'node', 'promise'],
   jsPlugins: [
     'eslint-plugin-perfectionist',
     '@e18e/eslint-plugin',
@@ -33,97 +44,80 @@ export default defineConfig({
     '@stylistic/eslint-plugin',
     'eslint-plugin-security',
     'eslint-plugin-compat',
-    'eslint-plugin-prefer-let',
   ],
+  extends: [],
   rules: {
-    'default-case-last': 'error',
+    ...pluginCompat.configs['flat/recommended'].rules,
+    // ...pluginPerfectionist.configs['recommended-natural'].rules,
+    ...pluginSecurity.configs.recommended.rules,
+    ...pluginSonarJs.configs.recommended.rules,
+    ...pluginE18e.configs.recommended.rules,
+    ...pluginRegexp.configs.recommended.rules,
+
+    'capitalized-comments': 'off',
     eqeqeq: ['error', 'always'],
-    'import/first': 'error',
-    'import/no-duplicates': 'error',
-    'import/no-unassigned-import': 'off',
-    'no-array-constructor': 'error',
-    'no-case-declarations': 'error',
-    'no-empty': ['error', { allowEmptyCatch: true }],
-    'no-fallthrough': 'error',
+    'eslint/id-length': ['error', { checkGeneric: false, exceptions: ['x', 'y', 'z', 'v', '_'] }],
+    'id-length': 'off',
+    'import/consistent-type-specifier-style': 'off',
+    'import/exports-last': 'off',
+    'import/group-exports': 'off',
+    'import/no-cycle': 'warn',
+    'import/no-named-export': 'off',
+    'import/no-relative-parent-imports': 'off',
+    'import/prefer-default-export': 'off',
+    'init-declarations': 'off',
+    'max-statements': 'off',
+    'new-cap': 'off',
+    'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
+    'no-continue': 'off',
     'no-lonely-if': 'error',
-    'no-new-wrappers': 'error',
-    'no-prototype-builtins': 'error',
-    'no-redeclare': 'error', /////////////////////////////////////////////////////////////////
-    'no-regex-spaces': 'error',
-    'no-return-assign': ['error', 'except-parens'],
-    'no-self-assign': [
-      'error',
-      {
-        props: true,
-      },
-    ],
-    'no-self-compare': 'error',
-    'no-sequences': 'error',
-    'no-template-curly-in-string': 'error',
-    'no-throw-literal': 'error',
-    'no-unneeded-ternary': [
-      'error',
-      {
-        defaultAssignment: false,
-      },
-    ],
-    'no-unused-expressions': [
-      'error',
-      {
-        allowShortCircuit: true,
-        allowTaggedTemplates: true,
-        allowTernary: true,
-      },
-    ],
-    'no-unused-vars': [
-      'error',
-      {
-        args: 'after-used',
-        vars: 'all',
-      },
-    ],
-    'no-use-before-define': [
-      'error',
-      {
-        classes: false,
-        functions: false,
-        variables: false,
-      },
-    ],
-    'no-useless-call': 'error',
-    'no-useless-computed-key': 'error',
-    'no-useless-return': 'error',
-    'no-var': 'warn',
-    'node/global-require': 'error',
-    'node/handle-callback-err': ['error', '^(err|error)$'],
-    'node/no-exports-assign': 'error',
-    'node/no-new-require': 'error',
-    'node/no-path-concat': 'error',
-    'prefer-exponentiation-operator': 'error',
-    'prefer-let/prefer-let': [
-      'error',
-      {
-        forceUpperCaseConst: true,
-      },
-    ],
-    'prefer-promise-reject-errors': 'error',
-    'prefer-rest-params': 'error',
-    'prefer-spread': 'error',
-    'symbol-description': 'error',
-    'typescript/consistent-return': 'off',
+    'no-magic-numbers': 'off',
+    'no-ternary': 'off',
+    'no-unassigned-import': ['error', { allow: ['**/*.css'] }],
+    'no-undefined': 'off',
+    'no-void': 'off',
+    'oxc/no-async-await': 'off',
+    'oxc/no-optional-chaining': 'off',
+    'oxc/no-rest-spread-properties': 'off',
+    'sonarjs/no-redundant-jump': 'off',
+    'sonarjs/redundant-type-aliases': 'off',
+    'sonarjs/todo-tag': 'warn',
+    'sonarjs/void-use': 'off',
+    'sort-imports': 'off',
+    'sort-keys': 'warn',
+    'typescript/array-type': ['error', { default: 'array-simple' }],
+    'typescript/consistent-return': 'off', // Favor typescripts noImplicitReturns flag instead
+    'typescript/explicit-function-return-type': 'off',
+    'typescript/explicit-module-boundary-types': 'off',
+    'typescript/no-empty-interface': 'off',
+    'typescript/no-empty-object-type': 'off',
+    'typescript/no-unsafe-type-assertion': 'off',
+    'unicorn/no-abusive-eslint-disable': 'off',
   },
   overrides: [
     {
       files: ['**/*.config.{js,ts,cjs,mjs}'],
       rules: {
-        'import/no-default-export': 'off'
+        'import/no-default-export': 'off',
       },
     },
     {
-      files: ['**/types.ts'],
+      files: ['**/*.{test.ts,test.js,test.tsx,stories.tsx}', '**/types.ts', '**/test/*'],
+      plugins: ['vitest'],
+    },
+    {
+      files: ['**/*.svelte'],
       rules: {
-        'no-console': 'off',
-        'typescript/no-floating-promises': 'off',
+        'import/no-named-export': 'off',
+        'import/unambiguous': 'off',
+
+        'no-unassigned-vars': 'off', // Won't work with svelte for now...
+        'prefer-const': 'off', // Won't work with svelte for now...
+
+        'sonarjs/unused-import': 'off',
+
+        // Enforce pascal case for svelte files, ignore sveltekit's special files,
+        'unicorn/filename-case': ['error', { case: 'pascalCase', ignore: [/^\+.*\.svelte$/] }],
       },
     },
   ],
